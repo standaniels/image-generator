@@ -18,11 +18,11 @@ class Polygon extends Shape
      */
     protected $rotate;
 
-    public function __construct(Canvas $canvas, int $x, int $y, int $size, Color $color, int $sides, $rotate = 0)
+    public function __construct(Canvas $canvas, int $x, int $y, int $size, Color $color, int $sides, int $rotate = 0)
     {
         parent::__construct($canvas, $x, $y, $size, $color);
 
-        Assert::nullOrRange($rotate, 0, 360 / $sides);
+        Assert::range($rotate, 0, 360 / $sides);
         Assert::greaterThan($sides, 2);
 
         $this->sides = $sides;
@@ -31,7 +31,7 @@ class Polygon extends Shape
         $this->calculatePoints($sides, $rotate);
     }
 
-    protected function calculatePoints($sides, $rotate): void
+    protected function calculatePoints(int $sides, int $rotate): void
     {
         $this->points = [];
         for ($i = 0; $i < $sides; $i++) {
