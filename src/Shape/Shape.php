@@ -70,7 +70,7 @@ abstract class Shape
         $x = random_int(0, $canvas->getWidth());
         $y = random_int(0, $canvas->getHeight());
         $geometricAverage = floor(sqrt($canvas->getWidth() * $canvas->getHeight()));
-        $size = random_int($geometricAverage / 8, $geometricAverage / 4);
+        $size = random_int((int) ($geometricAverage / 8), (int) ($geometricAverage / 4));
         $color = $color ?? Color::random();
 
         if (static::class === Circle::class) {
