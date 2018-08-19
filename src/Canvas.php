@@ -33,9 +33,9 @@ class Canvas
         $this->area = $width * $height;
     }
 
-    public static function create(int $width, int $height, float $antiAlias = 1)
+    public static function create(int $width, int $height, float $antiAliasing = 1)
     {
-        return new static($width, $height, $antiAlias);
+        return new static($width, $height, $antiAliasing);
     }
 
     public function background(Color $color): self
