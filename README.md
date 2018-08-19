@@ -29,6 +29,7 @@ $image = Image::create($canvas);
 ```
 
 Of which this could be the output:
+
 ![A randomly generated image](https://www.standaniels.nl/github/docs/image-generator/output.png)
 
 ## Installation
