@@ -108,15 +108,15 @@ class Canvas
             return $this->image;
         }
 
-        $realWidth = $this->width / $this->anti_aliasing;
-        $realHeight = $this->height / $this->anti_aliasing;
+        $intendedWidth = (int) ($this->width / $this->anti_aliasing);
+        $intendedHeight = (int) ($this->height / $this->anti_aliasing);
 
-        $resized = imagecreatetruecolor($realWidth, $realHeight);
+        $resized = imagecreatetruecolor($intendedWidth, $intendedHeight);
         if ($resized === false) {
             throw new \RuntimeException('Resizing failed.');
         }
 
-        imagecopyresampled($resized, $this->image, 0, 0, 0, 0, $realWidth, $realHeight, $this->width, $this->height);
+        imagecopyresampled($resized, $this->image, 0, 0, 0, 0, $intendedWidth, $intendedHeight, $this->width, $this->height);
 
         return $resized;
     }
