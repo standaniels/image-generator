@@ -27,11 +27,10 @@ class Color
     protected $alpha;
 
     /**
-     * Color constructor.
-     * @param int $red Value between 0 and 255
-     * @param int $green Value between 0 and 255
-     * @param int $blue Value between 0 and 255
-     * @param float $alpha 0 for completely opaque, 1 for completely transparent
+     * @param int $red Value between 0 and 255.
+     * @param int $green Value between 0 and 255.
+     * @param int $blue Value between 0 and 255.
+     * @param float $alpha Value between 0 and 1; 0 for completely opaque, 1 for completely transparent.
      */
     public function __construct(int $red = 0, int $green = 0, int $blue = 0, float $alpha = 0)
     {
@@ -41,11 +40,25 @@ class Color
         $this->setAlpha($alpha);
     }
 
+    /**
+     * Creates a random color.
+     *
+     * @param float|null $alpha Value between 0 and 1; 0 for completely opaque, 1 for completely transparent, null for random.
+     *
+     * @return Color
+     */
     public static function random(float $alpha = null)
     {
         return new static(random_int(0, 255), random_int(0, 255), random_int(0, 255), $alpha ?? (random_int(0, 100) / 100));
     }
 
+    /**
+     * Allocate the color on the given canvas.
+     *
+     * @param Canvas $canvas
+     *
+     * @return int
+     */
     public function allocate(Canvas $canvas): int
     {
         return imagecolorallocatealpha($canvas->getResource(), $this->red, $this->green, $this->blue, $this->alpha);
@@ -57,7 +70,7 @@ class Color
     }
 
     /**
-     * @param int $red Value between 0 and 255
+     * @param int $red Value between 0 and 255.
      */
     public function setRed(int $red): void
     {
@@ -71,7 +84,7 @@ class Color
     }
 
     /**
-     * @param int $green Value between 0 and 255
+     * @param int $green Value between 0 and 255.
      */
     public function setGreen(int $green): void
     {
@@ -85,7 +98,7 @@ class Color
     }
 
     /**
-     * @param int $blue Value between 0 and 255
+     * @param int $blue Value between 0 and 255.
      */
     public function setBlue(int $blue): void
     {
@@ -99,7 +112,7 @@ class Color
     }
 
     /**
-     * @param float $alpha Value between 0 and 1
+     * @param float $alpha Value between 0 and 1; 0 for completely opaque, 1 for completely transparent.
      */
     public function setAlpha(float $alpha): void
     {

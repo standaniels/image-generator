@@ -39,10 +39,10 @@ abstract class Shape
     protected $color;
 
     /**
-     * @param Canvas $canvas The canvas this shape will be drawn on
-     * @param int $x X coordinate of the center
-     * @param int $y Y coordinate of the center
-     * @param int $size The distance to the center each vertex will be
+     * @param Canvas $canvas The canvas this shape will be drawn on.
+     * @param int $x X coordinate of the center of the shape.
+     * @param int $y Y coordinate of the center of the shape.
+     * @param int $size The distance to the center each vertex will be.
      * @param Color $color
      */
     public function __construct(Canvas $canvas, int $x, int $y, int $size, Color $color)
@@ -57,6 +57,14 @@ abstract class Shape
         $this->color = $color;
     }
 
+    /**
+     * Generates a random shape.
+     *
+     * @param Canvas $canvas The canvas the shape will be drawn on.
+     * @param Color|null $color The color of the shape, null for a random color.
+     * @return Circle|Polygon
+     * @throws \Exception
+     */
     public static function random(Canvas $canvas, Color $color = null): Shape
     {
         $x = random_int(0, $canvas->getWidth());
@@ -81,43 +89,31 @@ abstract class Shape
         return new Polygon($canvas, $x, $y, $size, $color, $sides);
     }
 
+    /**
+     * Draw the shape on its canvas.
+     */
     abstract public function draw(): void;
 
-    /**
-     * @return int
-     */
     public function getX(): int
     {
         return $this->x;
     }
 
-    /**
-     * @return int
-     */
     public function getY(): int
     {
         return $this->y;
     }
 
-    /**
-     * @return int
-     */
     public function getSize(): int
     {
         return $this->size;
     }
 
-    /**
-     * @return int
-     */
     public function getSides(): int
     {
         return $this->sides;
     }
 
-    /**
-     * @return Color
-     */
     public function getColor(): Color
     {
         return $this->color;

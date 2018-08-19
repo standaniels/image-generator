@@ -11,6 +11,9 @@ class Image extends \SplFileInfo
      */
     protected $mime_type;
 
+    /**
+     * @param string $path Location of the image file.
+     */
     public function __construct(string $path)
     {
         Assert::fileExists($path);
@@ -24,7 +27,7 @@ class Image extends \SplFileInfo
 
     /**
      * @param Canvas $canvas
-     * @param string|null $path If null, the image will be written to the temporary files folder.
+     * @param string|null $path If null, the image will be written to the directory used for temporary files.
      * @return Image
      */
     public static function create(Canvas $canvas, string $path = null)
@@ -46,6 +49,11 @@ class Image extends \SplFileInfo
         return new static($path);
     }
 
+    /**
+     * Get the data URI for this image. Image contents will be base64 encoded.
+     *
+     * @return string
+     */
     public function dataUri(): string
     {
         return "data:{$this->getMimeType()};base64," . base64_encode($this->contents());
