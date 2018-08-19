@@ -23,7 +23,6 @@ class PolygonTest extends TestCase
 
         $polygon = new Polygon($canvas, 0, 0, 10, $color, $sides);
 
-
         $points = Assert::getObjectAttribute($polygon, 'points');
 
         foreach ($points as $key => $value) {
@@ -140,9 +139,9 @@ class PolygonTest extends TestCase
         $canvas->shouldReceive('getWidth')->andReturn(100);
         $canvas->shouldReceive('getHeight')->andReturn(100);
 
-        $circle = Polygon::random($canvas);
+        $polygon = Polygon::random($canvas);
 
-        $this->assertInstanceOf(Polygon::class, $circle);
+        $this->assertInstanceOf(Polygon::class, $polygon);
     }
 
     /** @test */
@@ -163,12 +162,12 @@ class PolygonTest extends TestCase
         $canvas->shouldReceive('getWidth')->andReturn(100);
         $canvas->shouldReceive('getHeight')->andReturn(100);
         $color = new Color(1, 2, 3, .5);
-        $circle = new Polygon($canvas, 100, 50, 10, $color, 8);
+        $polygon = new Polygon($canvas, 100, 50, 10, $color, 8);
 
-        $this->assertSame($color, $circle->getColor());
-        $this->assertSame(100, $circle->getX());
-        $this->assertSame(50, $circle->getY());
-        $this->assertSame(10, $circle->getSize());
-        $this->assertSame(8, $circle->getSides());
+        $this->assertSame($color, $polygon->getColor());
+        $this->assertSame(100, $polygon->getX());
+        $this->assertSame(50, $polygon->getY());
+        $this->assertSame(10, $polygon->getSize());
+        $this->assertSame(8, $polygon->getSides());
     }
 }
