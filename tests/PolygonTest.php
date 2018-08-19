@@ -161,7 +161,11 @@ class PolygonTest extends TestCase
         $canvas = M::mock(Canvas::class);
         $canvas->shouldReceive('getWidth')->andReturn(100);
         $canvas->shouldReceive('getHeight')->andReturn(100);
-        $color = new Color(1, 2, 3, .5);
+        $color = M::mock(Color::class);
+        $color->shouldReceive('getRed')->andReturn(64);
+        $color->shouldReceive('getGreen')->andReturn(64);
+        $color->shouldReceive('getBlue')->andReturn(64);
+        $color->shouldReceive('getAlpha')->andReturn(127);
         $polygon = new Polygon($canvas, 100, 50, 10, $color, 8);
 
         $this->assertSame($color, $polygon->getColor());
