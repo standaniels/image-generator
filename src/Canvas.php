@@ -87,10 +87,10 @@ class Canvas
     /**
      * Generates an image based on this canvas.
      *
-     * @param null $path
+     * @param string|null $path If null, the image will be written to the directory used for temporary files.
      * @return Image
      */
-    public function generate($path = null)
+    public function generate(string $path = null)
     {
         return Image::create($this, $path);
     }
