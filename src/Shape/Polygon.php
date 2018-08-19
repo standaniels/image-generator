@@ -23,6 +23,7 @@ class Polygon extends Shape
         parent::__construct($canvas, $x, $y, $size, $color);
 
         Assert::nullOrRange($rotate, 0, 360 / $sides);
+        Assert::greaterThan($sides, 2);
 
         $this->sides = $sides;
         $this->rotate = $rotate;

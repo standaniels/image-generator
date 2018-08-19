@@ -174,4 +174,21 @@ class PolygonTest extends TestCase
         $this->assertSame(10, $polygon->getSize());
         $this->assertSame(8, $polygon->getSides());
     }
+
+    /** @test */
+    public function it_cannot_exist_with_less_than_three_sides()
+    {
+        $canvas = M::mock(Canvas::class);
+        $canvas->shouldReceive('getWidth')->andReturn(100);
+        $canvas->shouldReceive('getHeight')->andReturn(100);
+        $color = M::mock(Color::class);
+        $color->shouldReceive('getRed')->andReturn(64);
+        $color->shouldReceive('getGreen')->andReturn(64);
+        $color->shouldReceive('getBlue')->andReturn(64);
+        $color->shouldReceive('getAlpha')->andReturn(127);
+
+        $this->expectException(\InvalidArgumentException::class);
+
+        new Polygon($canvas, 100, 50, 10, Color::random(), 2);
+    }
 }
