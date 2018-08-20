@@ -6,8 +6,7 @@
     "image",
     "generator",
     "stan",
-    "daniels",
-    "laravel"
+    "daniels"
   ],
   "homepage": "https://github.com/standaniels/image-generator",
   "license": "MIT",
