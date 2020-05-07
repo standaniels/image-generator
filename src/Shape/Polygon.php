@@ -2,9 +2,9 @@
 
 namespace StanDaniels\ImageGenerator\Shape;
 
+use InvalidArgumentException;
 use StanDaniels\ImageGenerator\Canvas;
 use StanDaniels\ImageGenerator\Color;
-use Webmozart\Assert\Assert;
 
 class Polygon extends Shape
 {
@@ -31,8 +31,13 @@ class Polygon extends Shape
     {
         parent::__construct($canvas, $x, $y, $size, $color);
 
-        Assert::range($rotate, 0, 360 / $sides);
-        Assert::greaterThan($sides, 2);
+        if ($rotate < 0 || $rotate > 360) {
+            throw new InvalidArgumentException("\$rotate must be between 0 and 360, $rotate given.");
+        }
+
+        if ($sides <= 2) {
+            throw new InvalidArgumentException("\$sides must 3 or greater, $sides given.");
+        }
 
         $this->sides = $sides;
         $this->rotate = $rotate;

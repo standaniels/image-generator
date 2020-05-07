@@ -2,7 +2,7 @@
 
 namespace StanDaniels\ImageGenerator;
 
-use Webmozart\Assert\Assert;
+use InvalidArgumentException;
 
 class Canvas
 {
@@ -40,8 +40,12 @@ class Canvas
      */
     public function __construct(int $width, int $height, float $antiAliasing = 1)
     {
-        Assert::greaterThan($width, 0);
-        Assert::greaterThan($height, 0);
+        if ($width <= 0) {
+            throw new InvalidArgumentException("\$width must be greater than 0, $width given.");
+        }
+        if ($height <= 0) {
+            throw new InvalidArgumentException("\$height must be greater than 0, $height given.");
+        }
 
         if ($antiAliasing > 1) {
             $width = (int) round($width * $antiAliasing);

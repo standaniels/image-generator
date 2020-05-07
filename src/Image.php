@@ -2,7 +2,7 @@
 
 namespace StanDaniels\ImageGenerator;
 
-use Webmozart\Assert\Assert;
+use InvalidArgumentException;
 
 class Image extends \SplFileInfo
 {
@@ -16,7 +16,9 @@ class Image extends \SplFileInfo
      */
     public function __construct(string $path)
     {
-        Assert::fileExists($path);
+        if (!file_exists($path)) {
+            throw new InvalidArgumentException("File $path doesn't exist.");
+        }
         parent::__construct($path);
         $imageType = exif_imagetype($path);
         if ($imageType === false) {

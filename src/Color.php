@@ -2,7 +2,7 @@
 
 namespace StanDaniels\ImageGenerator;
 
-use Webmozart\Assert\Assert;
+use InvalidArgumentException;
 
 class Color
 {
@@ -74,7 +74,9 @@ class Color
      */
     public function setRed(int $red): void
     {
-        Assert::range($red, 0, 255);
+        if ($red < 0 || $red > 255) {
+            throw new InvalidArgumentException("\$red be between 0 and 255, $red given.");
+        }
         $this->red = $red;
     }
 
@@ -88,7 +90,9 @@ class Color
      */
     public function setGreen(int $green): void
     {
-        Assert::range($green, 0, 255);
+        if ($green < 0 || $green > 255) {
+            throw new InvalidArgumentException("\$green be between 0 and 255, $green given.");
+        }
         $this->green = $green;
     }
 
@@ -102,7 +106,9 @@ class Color
      */
     public function setBlue(int $blue): void
     {
-        Assert::range($blue, 0, 255);
+        if ($blue < 0 || $blue > 255) {
+            throw new InvalidArgumentException("\$blue be between 0 and 255, $blue given.");
+        }
         $this->blue = $blue;
     }
 
@@ -116,7 +122,9 @@ class Color
      */
     public function setAlpha(float $alpha): void
     {
-        Assert::range($alpha, 0, 1);
+        if ($alpha < 0 || $alpha > 1) {
+            throw new InvalidArgumentException("\$alpha be between 0 and 1, $alpha given.");
+        }
         $this->alpha = (int) ($alpha * 127);
     }
 }

@@ -2,9 +2,9 @@
 
 namespace StanDaniels\ImageGenerator\Shape;
 
+use InvalidArgumentException;
 use StanDaniels\ImageGenerator\Canvas;
 use StanDaniels\ImageGenerator\Color;
-use Webmozart\Assert\Assert;
 
 abstract class Shape
 {
@@ -47,8 +47,18 @@ abstract class Shape
      */
     public function __construct(Canvas $canvas, int $x, int $y, int $size, Color $color)
     {
-        Assert::range($x, 0, $canvas->getWidth());
-        Assert::range($y, 0, $canvas->getHeight());
+        if ($x < 0) {
+            throw new InvalidArgumentException("\$x must be at leaste 0, $x given.");
+        }
+        if ($x > $canvas->getWidth()) {
+            throw new InvalidArgumentException("\$x cannot exceed canvas width, $x given.");
+        }
+        if ($y < 0) {
+            throw new InvalidArgumentException("\$y must be at leaste 0, $y given.");
+        }
+        if ($y > $canvas->getHeight()) {
+            throw new InvalidArgumentException("\$y cannot exceed canvas width, $y given.");
+        }
 
         $this->canvas = $canvas;
         $this->x = $x;
