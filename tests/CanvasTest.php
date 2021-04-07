@@ -2,6 +2,7 @@
 
 namespace StanDaniels\ImageGenerator\Tests;
 
+use GdImage;
 use InvalidArgumentException;
 use StanDaniels\ImageGenerator\Canvas;
 use StanDaniels\ImageGenerator\Color;
@@ -36,10 +37,7 @@ class CanvasTest extends TestCase
 
         self::assertEquals(200, imagesx($image));
         self::assertEquals(100, imagesy($image));
-        self::assertTrue(
-            is_resource($image) && get_resource_type($image) === 'gd',
-            'Failed asserting that $image is a resource of type gd.'
-        );
+        self::assertInstanceOf(GdImage::class, $image);
     }
 
     /** @test */
