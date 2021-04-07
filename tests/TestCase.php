@@ -8,13 +8,13 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
     protected $targetFile;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->targetFile = __DIR__ . '/testfiles/target.png';
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         if (file_exists($this->targetFile)) {
             unlink($this->targetFile);

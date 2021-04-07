@@ -3,7 +3,6 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/standaniels/image-generator.svg?style=flat-square)](https://packagist.org/packages/standaniels/image-generator)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 [![Build Status](https://img.shields.io/travis/com/standaniels/image-generator/master.svg?style=flat-square)](https://travis-ci.com/standaniels/image-generator)
-[![Quality Score](https://img.shields.io/scrutinizer/g/standaniels/image-generator.svg?style=flat-square)](https://scrutinizer-ci.com/g/standaniels/image-generator)
 [![StyleCI](https://styleci.io/repos/145283689/shield?branch=master)](https://styleci.io/repos/145283689)
 [![Total Downloads](https://img.shields.io/packagist/dt/standaniels/image-generator.svg?style=flat-square)](https://packagist.org/packages/standaniels/image-generator)
 

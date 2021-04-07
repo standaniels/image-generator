@@ -12,7 +12,7 @@ use StanDaniels\ImageGenerator\Shape\Shape;
 class ShapeTest extends TestCase
 {
     /** @test */
-    public function it_can_create_a_random_shape_in_a_random_color()
+    public function it_can_create_a_random_shape_in_a_random_color(): void
     {
         $canvas = M::mock(Canvas::class);
         $canvas->shouldReceive('getWidth')
@@ -23,11 +23,11 @@ class ShapeTest extends TestCase
             ->times(3);
         $shape = Shape::random($canvas);
 
-        $this->assertTrue($shape instanceof Circle || $shape instanceof Polygon);
+        self::assertTrue($shape instanceof Circle || $shape instanceof Polygon);
     }
 
     /** @test */
-    public function it_can_create_a_random_shape_in_a_given_color()
+    public function it_can_create_a_random_shape_in_a_given_color(): void
     {
         $canvas = M::mock(Canvas::class);
         $canvas->shouldReceive('getWidth')->andReturn(100);
@@ -36,8 +36,8 @@ class ShapeTest extends TestCase
 
         $color = $shape->getColor();
 
-        $this->assertSame(255, $color->getRed());
-        $this->assertSame(128, $color->getGreen());
-        $this->assertSame(100, $color->getBlue());
+        self::assertSame(255, $color->getRed());
+        self::assertSame(128, $color->getGreen());
+        self::assertSame(100, $color->getBlue());
     }
 }
