@@ -2,8 +2,8 @@
 
 namespace StanDaniels\ImageGenerator\Tests;
 
+use InvalidArgumentException;
 use Mockery as M;
-use PHPUnit\Framework\Assert;
 use StanDaniels\ImageGenerator\Canvas;
 use StanDaniels\ImageGenerator\Color;
 use StanDaniels\ImageGenerator\Shape\Polygon;
@@ -13,24 +13,26 @@ class PolygonTest extends TestCase
     /**
      * @test
      * @dataProvider pointsProvider
+     * @param $sides
+     * @param $expected
      */
-    public function it_can_calculate_the_points_of_all_the_vertices($sides, $expected)
+    public function it_can_calculate_the_points_of_all_the_vertices($sides, $expected): void
     {
         $canvas = M::mock(Canvas::class);
         $canvas->shouldReceive('getWidth')->andReturn(100);
         $canvas->shouldReceive('getHeight')->andReturn(100);
         $color = M::mock(Color::class);
 
-        $polygon = new Polygon($canvas, 0, 0, 10, $color, $sides);
+        $polygon = new TestPolygon($canvas, 0, 0, 10, $color, $sides);
 
-        $points = Assert::getObjectAttribute($polygon, 'points');
-
-        foreach ($points as $key => $value) {
-            $this->assertEquals($expected[$key], $value, '', 0.1);
+        self::assertInstanceOf(Polygon::class, $polygon);
+        self::assertGreaterThanOrEqual(1, $polygon->points());
+        foreach ($polygon->points() as $key => $value) {
+            self::assertEqualsWithDelta($expected[$key], $value, 0.1);
         }
     }
 
-    public function pointsProvider()
+    public function pointsProvider(): array
     {
         return [
             [
@@ -133,7 +135,7 @@ class PolygonTest extends TestCase
     }
 
     /** @test */
-    public function it_can_generate_a_random_polygon()
+    public function it_can_generate_a_random_polygon(): void
     {
         $canvas = M::mock(Canvas::class);
         $canvas->shouldReceive('getWidth')->andReturn(100);
@@ -141,22 +143,22 @@ class PolygonTest extends TestCase
 
         $polygon = Polygon::random($canvas);
 
-        $this->assertInstanceOf(Polygon::class, $polygon);
+        self::assertInstanceOf(Polygon::class, $polygon);
     }
 
     /** @test */
-    public function it_can_be_drawn_on_a_canvas()
+    public function it_can_be_drawn_on_a_canvas(): void
     {
         $canvas = new Canvas(100, 100);
 
         Polygon::random($canvas)->draw();
         $canvas->generate($this->targetFile);
 
-        $this->assertFileExists($this->targetFile);
+        self::assertFileExists($this->targetFile);
     }
 
     /** @test */
-    public function it_can_return_the_properties()
+    public function it_can_return_the_properties(): void
     {
         $canvas = M::mock(Canvas::class);
         $canvas->shouldReceive('getWidth')->andReturn(100);
@@ -168,15 +170,15 @@ class PolygonTest extends TestCase
         $color->shouldReceive('getAlpha')->andReturn(127);
         $polygon = new Polygon($canvas, 100, 50, 10, $color, 8);
 
-        $this->assertSame($color, $polygon->getColor());
-        $this->assertSame(100, $polygon->getX());
-        $this->assertSame(50, $polygon->getY());
-        $this->assertSame(10, $polygon->getSize());
-        $this->assertSame(8, $polygon->getSides());
+        self::assertSame($color, $polygon->getColor());
+        self::assertSame(100, $polygon->getX());
+        self::assertSame(50, $polygon->getY());
+        self::assertSame(10, $polygon->getSize());
+        self::assertSame(8, $polygon->getSides());
     }
 
     /** @test */
-    public function it_cannot_exist_with_less_than_three_sides()
+    public function it_cannot_exist_with_less_than_three_sides(): void
     {
         $canvas = M::mock(Canvas::class);
         $canvas->shouldReceive('getWidth')->andReturn(100);
@@ -187,8 +189,16 @@ class PolygonTest extends TestCase
         $color->shouldReceive('getBlue')->andReturn(64);
         $color->shouldReceive('getAlpha')->andReturn(127);
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         new Polygon($canvas, 100, 50, 10, Color::random(), 2);
+    }
+}
+
+class TestPolygon extends Polygon
+{
+    public function points(): array
+    {
+        return $this->points;
     }
 }
