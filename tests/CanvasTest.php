@@ -37,7 +37,14 @@ class CanvasTest extends TestCase
 
         self::assertEquals(200, imagesx($image));
         self::assertEquals(100, imagesy($image));
-        self::assertInstanceOf(GdImage::class, $image);
+        if (strpos(PHP_VERSION, '8.') === 0) {
+            self::assertInstanceOf(GdImage::class, $image);
+        } else {
+            self::assertTrue(
+                is_resource($image) && get_resource_type($image) === 'gd',
+                'Failed asserting that $image is a resource of type gd.'
+            );
+        }
     }
 
     /** @test */
