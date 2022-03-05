@@ -1,9 +1,0 @@
-preset: psr2
-
-enabled:
-  - no_unused_imports
-  - cast_spaces
-
-finder:
-  exclude:
-    - "tests"
