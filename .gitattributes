@@ -3,3 +3,4 @@
 /phpunit.xml export-ignore
 /composer.lock export-ignore
 /tests/ export-ignore
+*.neon export-ignore
