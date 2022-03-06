@@ -25,7 +25,6 @@ class PolygonTest extends TestCase
         self::assertSame(
             '0.5',
             $polygon->getAttribute('fill-opacity'),
-
             'Failed to assert that the fill opacity is 0.5',
         );
         self::assertCount(

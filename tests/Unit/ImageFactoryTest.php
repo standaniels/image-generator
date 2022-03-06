@@ -42,7 +42,7 @@ class ImageFactoryTest extends TestCase
             100,
             200,
             [Color::fromHex('#00ff00')],
-            Color::fromHex('#ff00ff')
+            Color::fromHex('#ff00ff'),
         )->create();
 
         $background = $image->svg()->getDocument()->getElementsByTagName('rect')[0] ?? null;

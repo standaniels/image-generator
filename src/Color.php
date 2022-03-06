@@ -26,7 +26,7 @@ final class Color
         $validate = static function ($value, $name) {
             if ($value < 0 || $value > 255) {
                 throw new InvalidArgumentException(
-                    sprintf("%s value must be between 0 and 255, [%s] given", $name, $value),
+                    sprintf('%s value must be between 0 and 255, [%s] given', $name, $value),
                 );
             }
         };
@@ -49,7 +49,7 @@ final class Color
     {
         if (! preg_match('/^#?([a-f0-9]{2})([a-f0-9]{2})([a-f0-9]{2})$/i', $hexadecimal, $matches)) {
             throw new InvalidArgumentException(
-                sprintf('Hexadecimal must be in the format #RRGGBB, [%s] given.', $hexadecimal)
+                sprintf('Hexadecimal must be in the format #RRGGBB, [%s] given.', $hexadecimal),
             );
         }
 
@@ -68,7 +68,7 @@ final class Color
     {
         if ($opacity < 0 || $opacity > 100) {
             throw new InvalidArgumentException(
-                sprintf('Opacity value must be between 0 and 100, [%s] given.', $opacity)
+                sprintf('Opacity value must be between 0 and 100, [%s] given.', $opacity),
             );
         }
 

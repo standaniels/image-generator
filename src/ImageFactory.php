@@ -24,7 +24,7 @@ final class ImageFactory
         private int $width,
         private int $height,
         private array $shapeColors,
-        private ?Color $background = null
+        private ?Color $background = null,
     ) {
         if (empty($this->shapeColors)) {
             throw new InvalidArgumentException('At least one shape color is required');
