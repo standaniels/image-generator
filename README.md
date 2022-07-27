@@ -3,7 +3,6 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/standaniels/image-generator.svg?style=flat-square)](https://packagist.org/packages/standaniels/image-generator)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 [![Build Status](https://img.shields.io/travis/com/standaniels/image-generator/master.svg?style=flat-square)](https://travis-ci.com/standaniels/image-generator)
-[![StyleCI](https://styleci.io/repos/145283689/shield?branch=master)](https://styleci.io/repos/145283689)
 [![Total Downloads](https://img.shields.io/packagist/dt/standaniels/image-generator.svg?style=flat-square)](https://packagist.org/packages/standaniels/image-generator)
 
 This package makes generating images easy. Use them for placeholders without being dependent on some external service.
@@ -29,13 +28,13 @@ $image = Image::create($canvas);
 
 Of which this could be the output:
 
-![A randomly generated image](https://www.standaniels.nl/github/docs/image-generator/output.png)
+![A randomly generated image](https://user-images.githubusercontent.com/1199737/181206232-2606ba13-0236-4a1a-af6f-a0366a29e7c0.jpg)
 
 ## Using color palettes
 
 If you would like to generate an image based on a given set of colors like the one below, you can do it like this.
 
-![Color palette](https://www.standaniels.nl/github/docs/image-generator/palette.png)
+![Color palette](https://user-images.githubusercontent.com/1199737/181207233-b85a5e3a-0ea2-42a5-8263-2b4749eb5f0c.png)
 
 ```php
 use StanDaniels\ImageGenerator\Canvas;
@@ -65,7 +64,7 @@ $image = Image::create($canvas);
 
 The output would be something like this:
 
-![A randomly generated image based on a given set of colors](https://www.standaniels.nl/github/docs/image-generator/palette_output.png)
+![A randomly generated image based on a given set of colors](https://user-images.githubusercontent.com/1199737/181207373-3179c998-d682-4094-abf6-1681455cafb0.jpg)
 
 ## Installation
 
