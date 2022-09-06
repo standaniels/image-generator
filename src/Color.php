@@ -75,7 +75,7 @@ class Color
     public function setRed(int $red): void
     {
         if ($red < 0 || $red > 255) {
-            throw new InvalidArgumentException("\$red be between 0 and 255, $red given.");
+            throw new InvalidArgumentException("\$red must be between 0 and 255, $red given.");
         }
         $this->red = $red;
     }
@@ -91,7 +91,7 @@ class Color
     public function setGreen(int $green): void
     {
         if ($green < 0 || $green > 255) {
-            throw new InvalidArgumentException("\$green be between 0 and 255, $green given.");
+            throw new InvalidArgumentException("\$green must be between 0 and 255, $green given.");
         }
         $this->green = $green;
     }
@@ -107,7 +107,7 @@ class Color
     public function setBlue(int $blue): void
     {
         if ($blue < 0 || $blue > 255) {
-            throw new InvalidArgumentException("\$blue be between 0 and 255, $blue given.");
+            throw new InvalidArgumentException("\$blue must be between 0 and 255, $blue given.");
         }
         $this->blue = $blue;
     }
@@ -123,7 +123,7 @@ class Color
     public function setAlpha(float $alpha): void
     {
         if ($alpha < 0 || $alpha > 1) {
-            throw new InvalidArgumentException("\$alpha be between 0 and 1, $alpha given.");
+            throw new InvalidArgumentException("\$alpha must be between 0 and 1, $alpha given.");
         }
         $this->alpha = (int) ($alpha * 127);
     }

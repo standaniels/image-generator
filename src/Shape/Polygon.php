@@ -36,7 +36,7 @@ class Polygon extends Shape
         }
 
         if ($sides <= 2) {
-            throw new InvalidArgumentException("\$sides must 3 or greater, $sides given.");
+            throw new InvalidArgumentException("\$sides must be 3 or greater, $sides given.");
         }
 
         $this->sides = $sides;

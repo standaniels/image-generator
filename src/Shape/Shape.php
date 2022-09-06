@@ -48,13 +48,13 @@ abstract class Shape
     public function __construct(Canvas $canvas, int $x, int $y, int $size, Color $color)
     {
         if ($x < 0) {
-            throw new InvalidArgumentException("\$x must be at leaste 0, $x given.");
+            throw new InvalidArgumentException("\$x must be at least 0, $x given.");
         }
         if ($x > $canvas->getWidth()) {
             throw new InvalidArgumentException("\$x cannot exceed canvas width, $x given.");
         }
         if ($y < 0) {
-            throw new InvalidArgumentException("\$y must be at leaste 0, $y given.");
+            throw new InvalidArgumentException("\$y must be at least 0, $y given.");
         }
         if ($y > $canvas->getHeight()) {
             throw new InvalidArgumentException("\$y cannot exceed canvas width, $y given.");
