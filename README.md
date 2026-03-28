@@ -68,10 +68,99 @@ The output would be something like this:
 
 ## Installation
 
-You can install the package via composer:
+The library is distributed as a C extension. You compile it once against your local PHP installation, then load it like any other `.so` extension.
 
-``` bash
-composer require standaniels/image-generator
+### Requirements
+
+| Requirement | Notes |
+|---|---|
+| PHP ≥ 8.0 | Tested through PHP 8.5 |
+| php-dev / php-devel | Provides `phpize` and the build headers |
+| libgd | PHP must be built with GD support (`ext-gd`) |
+| libexif | PHP must be built with EXIF support (`ext-exif`) |
+| A C compiler | gcc or clang |
+| make | Standard build tool |
+
+On Debian / Ubuntu:
+
+```bash
+sudo apt-get install php-dev php-gd php-exif build-essential
+```
+
+On Red Hat / Fedora / CentOS:
+
+```bash
+sudo dnf install php-devel php-gd php-exif gcc make
+```
+
+On macOS (with [Homebrew](https://brew.sh)):
+
+```bash
+brew install php
+# php-config, phpize, and gd are included in the Homebrew php formula
+```
+
+### Build and install
+
+The C source lives in the `ext/` directory.
+
+```bash
+cd ext/
+
+# 1. Prepare the build environment
+phpize
+
+# 2. Configure (links against your active PHP installation automatically)
+./configure
+
+# 3. Compile
+make
+
+# 4. Install the .so into your PHP extension directory
+sudo make install
+```
+
+`make install` copies `image_generator.so` to the directory shown by `php-config --extension-dir`.
+
+### Enable the extension
+
+Add the extension to your `php.ini`:
+
+```ini
+extension=image_generator
+```
+
+Find the right `php.ini` with:
+
+```bash
+php --ini
+```
+
+To enable it only for a single script without editing `php.ini`:
+
+```bash
+php -d extension=image_generator script.php
+```
+
+### Verify the installation
+
+```bash
+php -r "var_dump(extension_loaded('image_generator'));"
+# → bool(true)
+```
+
+### Run the test suite
+
+The PHPT tests in `ext/tests/` are run with PHP's built-in test runner. From inside the `ext/` directory (after `make`):
+
+```bash
+make test
+```
+
+Or run them directly against the freshly built `.so`:
+
+```bash
+php run-tests.php -d extension=modules/image_generator.so tests/
 ```
 
 ## License
