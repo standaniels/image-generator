@@ -26,7 +26,7 @@ class CircleTest extends TestCase
         new Circle($canvas, $x, $y, 10, $color);
     }
 
-    public function invalidCoordinatesProvider(): array
+    public static function invalidCoordinatesProvider(): array
     {
         return [
             [

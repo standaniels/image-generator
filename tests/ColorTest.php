@@ -21,7 +21,7 @@ class ColorTest extends TestCase
         new Color($red, $green, $blue, $alpha);
     }
 
-    public function inValidColorValueSupplier(): array
+    public static function inValidColorValueSupplier(): array
     {
         return [
             [255, 255, 255, -1],

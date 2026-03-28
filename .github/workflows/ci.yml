@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  extension:
+    name: Extension tests (PHP 8.4)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: gd, exif
+
+      - name: Build extension
+        working-directory: ext
+        run: |
+          phpize
+          ./configure
+          make
+
+      - name: Run PHPT tests
+        working-directory: ext
+        run: |
+          php run-tests.php -p "$(which php)" \
+            -d extension="$(pwd)/modules/image_generator.so" \
+            tests/
+
+  phpunit:
+    name: PHPUnit (PHP 8.4)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: gd, exif
+          tools: composer
+
+      - name: Install dependencies
+        run: composer install --no-progress --prefer-dist
+
+      - name: Run PHPUnit
+        run: vendor/bin/phpunit

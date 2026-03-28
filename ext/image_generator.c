@@ -12,7 +12,7 @@
 #include "php.h"
 #include "php_ini.h"
 #include "ext/standard/info.h"
-#include "ext/standard/php_rand.h"
+#include "ext/random/php_random.h"
 #include "php_image_generator.h"
 
 /* ── Class entries (defined once, referenced by all translation units) ──── */
@@ -65,7 +65,7 @@ static bool igext_validate_color_component(zend_long val, const char *name)
 
 /* ── Argument info ───────────────────────────────────────────────────────── */
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_Color_construct, 0, 0, 0)
+ZEND_BEGIN_ARG_INFO(arginfo_Color_construct, 0)
     ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, red,   IS_LONG,   0, "0")
     ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, green, IS_LONG,   0, "0")
     ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, blue,  IS_LONG,   0, "0")
@@ -127,16 +127,16 @@ PHP_METHOD(Color, random)
 
     double alpha;
     if (z_alpha == NULL || Z_TYPE_P(z_alpha) == IS_NULL) {
-        alpha = (double)(php_mt_rand() % 101) / 100.0;
+        alpha = (double)php_mt_rand_range(0, 100) / 100.0;
     } else {
         alpha = zval_get_double(z_alpha);
     }
 
     object_init_ex(return_value, igext_color_ce);
     igext_color_object *obj = Z_IGEXT_COLOR_P(return_value);
-    obj->red   = (zend_long)(php_mt_rand() % 256);
-    obj->green = (zend_long)(php_mt_rand() % 256);
-    obj->blue  = (zend_long)(php_mt_rand() % 256);
+    obj->red   = php_mt_rand_range(0, 255);
+    obj->green = php_mt_rand_range(0, 255);
+    obj->blue  = php_mt_rand_range(0, 255);
     obj->alpha = (zend_long)(alpha * 127.0);
 }
 
