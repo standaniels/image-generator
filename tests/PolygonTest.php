@@ -32,7 +32,7 @@ class PolygonTest extends TestCase
         }
     }
 
-    public function pointsProvider(): array
+    public static function pointsProvider(): array
     {
         return [
             [
