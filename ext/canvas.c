@@ -36,7 +36,7 @@ static void igext_canvas_free_object(zend_object *obj)
 
 /* ── Argument info ───────────────────────────────────────────────────────── */
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_Canvas_construct, 0, 0, 2)
+ZEND_BEGIN_ARG_INFO(arginfo_Canvas_construct, 0)
     ZEND_ARG_TYPE_INFO(0, width,  IS_LONG,   0)
     ZEND_ARG_TYPE_INFO(0, height, IS_LONG,   0)
     ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, antiAliasing, IS_DOUBLE, 0, "1")
@@ -198,18 +198,13 @@ PHP_METHOD(Canvas, generate)
     ZEND_PARSE_PARAMETERS_END();
 
     /* Delegate to Image::create($this, $path) */
-    zval args[2], z_method, image_ce_zv, create_rv;
+    zval args[2], create_rv;
     ZVAL_OBJ(&args[0], Z_OBJ_P(ZEND_THIS));
     if (path) {
         ZVAL_STR(&args[1], path);
     } else {
         ZVAL_NULL(&args[1]);
     }
-
-    zend_class_entry *img_ce = igext_image_ce;
-    ZVAL_STRING(&z_method, "create");
-    zval z_class;
-    ZVAL_OBJ(&z_class, &img_ce->default_object_handlers);
 
     /* Use call_user_function on the class (static call) */
     zval fn;
@@ -219,7 +214,6 @@ PHP_METHOD(Canvas, generate)
     ZVAL_UNDEF(&create_rv);
     call_user_function(CG(function_table), NULL, &fn, &create_rv, 2, args);
     zval_ptr_dtor(&fn);
-    zval_ptr_dtor(&z_method);
 
     RETVAL_ZVAL(&create_rv, 0, 1);
 }

@@ -11,7 +11,7 @@
 
 #include <math.h>
 #include "php.h"
-#include "ext/standard/php_rand.h"
+#include "ext/random/php_random.h"
 #include "ext/spl/spl_exceptions.h"
 #include "php_image_generator.h"
 
@@ -73,7 +73,7 @@ static void igext_polygon_free_object(zend_object *obj)
 static zend_long igext_rand_range(zend_long min, zend_long max)
 {
     if (min >= max) return min;
-    return min + (zend_long)(php_mt_rand() % (uint32_t)(max - min + 1));
+    return php_mt_rand_range(min, max);
 }
 
 /* Validate canvas coordinates */
@@ -113,7 +113,7 @@ static void igext_polygon_calculate_points(igext_polygon_object *polygon,
 
 /* ── Argument info ───────────────────────────────────────────────────────── */
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_Shape_construct, 0, 0, 5)
+ZEND_BEGIN_ARG_INFO(arginfo_Shape_construct, 0)
     ZEND_ARG_OBJ_INFO(0, canvas, StanDaniels\\ImageGenerator\\Canvas, 0)
     ZEND_ARG_TYPE_INFO(0, x,     IS_LONG, 0)
     ZEND_ARG_TYPE_INFO(0, y,     IS_LONG, 0)
@@ -138,7 +138,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_Shape_getColor, 0, 0,
     StanDaniels\\ImageGenerator\\Color, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_Polygon_construct, 0, 0, 6)
+ZEND_BEGIN_ARG_INFO(arginfo_Polygon_construct, 0)
     ZEND_ARG_OBJ_INFO(0, canvas, StanDaniels\\ImageGenerator\\Canvas, 0)
     ZEND_ARG_TYPE_INFO(0, x,      IS_LONG, 0)
     ZEND_ARG_TYPE_INFO(0, y,      IS_LONG, 0)
@@ -221,20 +221,8 @@ PHP_METHOD(Shape, random)
 
     /* Determine which class to instantiate */
     zend_class_entry *called_ce = zend_get_called_scope(execute_data);
-    bool make_circle  = false;
-    bool make_polygon = false;
-
-    if (called_ce == igext_circle_ce) {
-        make_circle = true;
-    } else if (called_ce == igext_polygon_ce) {
-        make_polygon = true;
-    } else {
-        if (igext_rand_range(0, 1) == 1) {
-            make_circle = true;
-        } else {
-            make_polygon = true;
-        }
-    }
+    bool make_circle = (called_ce == igext_circle_ce)
+        || (called_ce != igext_polygon_ce && igext_rand_range(0, 1) == 1);
 
     if (make_circle) {
         object_init_ex(return_value, igext_circle_ce);
@@ -360,7 +348,7 @@ PHP_METHOD(Circle, draw)
 
     if (Z_TYPE(retval) == IS_FALSE) {
         zval_ptr_dtor(&retval);
-        zend_throw_exception(zend_ce_runtime_exception, "Could not draw circle", 0);
+        zend_throw_exception(spl_ce_RuntimeException, "Could not draw circle", 0);
         RETURN_THROWS();
     }
     zval_ptr_dtor(&retval);

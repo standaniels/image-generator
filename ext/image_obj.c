@@ -10,6 +10,7 @@
 #endif
 
 #include "php.h"
+#include "zend_interfaces.h"
 #include "zend_smart_str.h"
 #include "ext/spl/spl_directory.h"
 #include "ext/spl/spl_exceptions.h"
@@ -17,7 +18,7 @@
 
 /* ── Argument info ───────────────────────────────────────────────────────── */
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_Image_construct, 0, 0, 1)
+ZEND_BEGIN_ARG_INFO(arginfo_Image_construct, 0)
     ZEND_ARG_TYPE_INFO(0, path, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
@@ -144,10 +145,6 @@ PHP_METHOD(Image, create)
     igext_call_function("imagepng", &png_rv, 2, png_args);
     zval_ptr_dtor(&png_rv);
 
-    /* imagedestroy($gd_image) */
-    zval destroy_rv;
-    igext_call_function("imagedestroy", &destroy_rv, 1, &gd_image);
-    zval_ptr_dtor(&destroy_rv);
     zval_ptr_dtor(&gd_image);
 
     /* return new Image($file_path) */
