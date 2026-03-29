@@ -84,6 +84,14 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Color_getInt, 0, 0, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Color_setComponent, 0, 1, IS_VOID, 0)
+    ZEND_ARG_TYPE_INFO(0, value, IS_LONG, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Color_setAlpha, 0, 1, IS_VOID, 0)
+    ZEND_ARG_TYPE_INFO(0, alpha, IS_DOUBLE, 0)
+ZEND_END_ARG_INFO()
+
 /* ── Color methods ───────────────────────────────────────────────────────── */
 
 PHP_METHOD(Color, __construct)
@@ -192,16 +200,68 @@ PHP_METHOD(Color, getAlpha)
     RETURN_LONG(Z_IGEXT_COLOR_P(ZEND_THIS)->alpha);
 }
 
+PHP_METHOD(Color, setRed)
+{
+    zend_long value;
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+        Z_PARAM_LONG(value)
+    ZEND_PARSE_PARAMETERS_END();
+
+    if (!igext_validate_color_component(value, "Red")) RETURN_THROWS();
+    Z_IGEXT_COLOR_P(ZEND_THIS)->red = value;
+}
+
+PHP_METHOD(Color, setGreen)
+{
+    zend_long value;
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+        Z_PARAM_LONG(value)
+    ZEND_PARSE_PARAMETERS_END();
+
+    if (!igext_validate_color_component(value, "Green")) RETURN_THROWS();
+    Z_IGEXT_COLOR_P(ZEND_THIS)->green = value;
+}
+
+PHP_METHOD(Color, setBlue)
+{
+    zend_long value;
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+        Z_PARAM_LONG(value)
+    ZEND_PARSE_PARAMETERS_END();
+
+    if (!igext_validate_color_component(value, "Blue")) RETURN_THROWS();
+    Z_IGEXT_COLOR_P(ZEND_THIS)->blue = value;
+}
+
+PHP_METHOD(Color, setAlpha)
+{
+    double alpha;
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+        Z_PARAM_DOUBLE(alpha)
+    ZEND_PARSE_PARAMETERS_END();
+
+    if (alpha < 0.0 || alpha > 1.0) {
+        zend_throw_exception_ex(spl_ce_InvalidArgumentException, 0,
+            "Alpha must be between 0 and 1, %f given", alpha);
+        RETURN_THROWS();
+    }
+    Z_IGEXT_COLOR_P(ZEND_THIS)->alpha = (zend_long)(alpha * 127.0);
+}
+
 /* ── Method table ────────────────────────────────────────────────────────── */
 
 static const zend_function_entry color_methods[] = {
     PHP_ME(Color, __construct, arginfo_Color_construct, ZEND_ACC_PUBLIC)
     PHP_ME(Color, random,      arginfo_Color_random,    ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
     PHP_ME(Color, allocate,    arginfo_Color_allocate,  ZEND_ACC_PUBLIC)
-    PHP_ME(Color, getRed,      arginfo_Color_getInt,    ZEND_ACC_PUBLIC)
-    PHP_ME(Color, getGreen,    arginfo_Color_getInt,    ZEND_ACC_PUBLIC)
-    PHP_ME(Color, getBlue,     arginfo_Color_getInt,    ZEND_ACC_PUBLIC)
-    PHP_ME(Color, getAlpha,    arginfo_Color_getInt,    ZEND_ACC_PUBLIC)
+    PHP_ME(Color, getRed,      arginfo_Color_getInt,       ZEND_ACC_PUBLIC)
+    PHP_ME(Color, getGreen,    arginfo_Color_getInt,       ZEND_ACC_PUBLIC)
+    PHP_ME(Color, getBlue,     arginfo_Color_getInt,       ZEND_ACC_PUBLIC)
+    PHP_ME(Color, getAlpha,    arginfo_Color_getInt,       ZEND_ACC_PUBLIC)
+    PHP_ME(Color, setRed,      arginfo_Color_setComponent, ZEND_ACC_PUBLIC)
+    PHP_ME(Color, setGreen,    arginfo_Color_setComponent, ZEND_ACC_PUBLIC)
+    PHP_ME(Color, setBlue,     arginfo_Color_setComponent, ZEND_ACC_PUBLIC)
+    PHP_ME(Color, setAlpha,    arginfo_Color_setAlpha,     ZEND_ACC_PUBLIC)
     PHP_FE_END
 };
 
