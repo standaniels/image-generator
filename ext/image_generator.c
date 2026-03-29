@@ -52,6 +52,22 @@ static void igext_color_free_object(zend_object *obj)
     zend_object_std_dtor(obj);
 }
 
+static zend_object *igext_color_clone_object(zend_object *old_object)
+{
+    igext_color_object *old_color = igext_color_from_obj(old_object);
+    zend_object        *new_std   = igext_color_create_object(old_object->ce);
+    igext_color_object *new_color = igext_color_from_obj(new_std);
+
+    zend_objects_clone_members(new_std, old_object);
+
+    new_color->red   = old_color->red;
+    new_color->green = old_color->green;
+    new_color->blue  = old_color->blue;
+    new_color->alpha = old_color->alpha;
+
+    return new_std;
+}
+
 /* ── Validate a color component (0-255) ─────────────────────────────────── */
 static bool igext_validate_color_component(zend_long val, const char *name)
 {
@@ -276,8 +292,9 @@ void igext_register_color_class(void)
 
     memcpy(&igext_color_handlers, zend_get_std_object_handlers(),
            sizeof(zend_object_handlers));
-    igext_color_handlers.offset   = XtOffsetOf(igext_color_object, std);
-    igext_color_handlers.free_obj = igext_color_free_object;
+    igext_color_handlers.offset    = XtOffsetOf(igext_color_object, std);
+    igext_color_handlers.free_obj  = igext_color_free_object;
+    igext_color_handlers.clone_obj = igext_color_clone_object;
 }
 
 /* ── Module lifecycle ────────────────────────────────────────────────────── */
