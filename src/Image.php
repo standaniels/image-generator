@@ -32,7 +32,7 @@ class Image extends \SplFileInfo
      * @param string|null $path If null, the image will be written to the directory used for temporary files.
      * @return Image
      */
-    public static function create(Canvas $canvas, string $path = null)
+    public static function create(Canvas $canvas, ?string $path = null)
     {
         if (null === $path) {
             $path = tempnam(sys_get_temp_dir(), 'img');
@@ -45,8 +45,6 @@ class Image extends \SplFileInfo
         if (imagepng($image, $path) === false) {
             throw new \RuntimeException('Failed to save image.');
         }
-
-        imagedestroy($image);
 
         return new static($path);
     }

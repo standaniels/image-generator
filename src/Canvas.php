@@ -94,7 +94,7 @@ class Canvas
      * @param string|null $path If null, the image will be written to the directory used for temporary files.
      * @return Image
      */
-    public function generate(string $path = null)
+    public function generate(?string $path = null)
     {
         return Image::create($this, $path);
     }

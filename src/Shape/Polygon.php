@@ -77,6 +77,13 @@ class Polygon extends Shape
 
     public function draw(): void
     {
-        imagefilledpolygon($this->canvas->getResource(), $this->points, $this->sides, $this->color->allocate($this->canvas));
+        $color = $this->color->allocate($this->canvas);
+
+        // $num_points is inferred from $this->points and deprecated as of PHP 8.5, but still mandatory before PHP 8.0.
+        if (PHP_VERSION_ID >= 80500) {
+            imagefilledpolygon($this->canvas->getResource(), $this->points, $color);
+        } else {
+            imagefilledpolygon($this->canvas->getResource(), $this->points, $this->sides, $color);
+        }
     }
 }
