@@ -8,14 +8,4 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-COPY ext/ ext/
-
-RUN cd ext \
-    && phpize \
-    && ./configure \
-    && make clean \
-    && make \
-    && make install \
-    && echo "extension=image_generator.so" > /usr/local/etc/php/conf.d/99-image_generator.ini
-
 COPY . .

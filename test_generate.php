@@ -6,9 +6,6 @@ use StanDaniels\ImageGenerator\Shape\Shape;
 use StanDaniels\ImageGenerator\Shape\Circle;
 use StanDaniels\ImageGenerator\Shape\Polygon;
 
-echo "Extension loaded: " . (extension_loaded('image_generator') ? 'yes' : 'no') . PHP_EOL;
-echo PHP_EOL;
-
 // Basic Color tests
 $red = new Color(255, 0, 0);
 echo "Color(255,0,0) -> r={$red->getRed()} g={$red->getGreen()} b={$red->getBlue()}" . PHP_EOL;
