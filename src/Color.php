@@ -47,7 +47,7 @@ class Color
      *
      * @return Color
      */
-    public static function random(float $alpha = null)
+    public static function random(?float $alpha = null)
     {
         return new static(random_int(0, 255), random_int(0, 255), random_int(0, 255), $alpha ?? (random_int(0, 100) / 100));
     }

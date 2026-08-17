@@ -75,7 +75,7 @@ abstract class Shape
      * @return Circle|Polygon
      * @throws \Exception
      */
-    public static function random(Canvas $canvas, Color $color = null): Shape
+    public static function random(Canvas $canvas, ?Color $color = null): Shape
     {
         $x = random_int(0, $canvas->getWidth());
         $y = random_int(0, $canvas->getHeight());
